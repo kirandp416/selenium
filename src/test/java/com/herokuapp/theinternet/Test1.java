@@ -28,7 +28,7 @@ public class Test1 {
 
         Assert.assertEquals(actualUrl,expectedUrl,"Different url");
 
-        Sleep(3000);
+        Sleep(1000);
 
         System.out.println("logged in");
 
