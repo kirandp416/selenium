@@ -2,7 +2,9 @@ package com.herokuapp.theinternet;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class Test1 {
@@ -20,9 +22,26 @@ public class Test1 {
         driver.findElement(By.name("password")).sendKeys("SuperSecretPassword!");
         driver.findElement(By.className("radius")).click();
 
+
+        String expectedUrl = "https://the-internet.herokuapp.com/secure";
+        String actualUrl = driver.getCurrentUrl();
+
+        Assert.assertEquals(actualUrl,expectedUrl,"Different url");
+
         Sleep(3000);
 
         System.out.println("logged in");
+
+        WebElement logoutButton = driver.findElement(By.xpath("//div[@id='content']//a[@href='/logout']"));
+        Assert.assertTrue(logoutButton.isDisplayed(),"No logout button bro");
+
+        WebElement successMessage = driver.findElement(By.className("flash"));
+        String actualMessage = successMessage.getText();
+        String expectedMessage = "You logged into a secure area!";
+
+        Assert.assertTrue(actualMessage.contains(expectedMessage),"Different message");
+
+        logoutButton.click();
         driver.quit();
     }
 
