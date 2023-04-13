@@ -2,19 +2,22 @@
 
 <suite name="AllTests" verbose="1" >
 
-    <test name="NegativeTest">
-        <groups>
-            <run>
-                <include name="smokeTests"/>
-            </run>
-        </groups>
-
+    <test name="NegativeUsernameTest">
+        <parameter name="username"  value="invalid"/>
+        <parameter name="password"  value="SuperSecretPassword!"/>
+        <parameter name="expectedMessage"  value="Your username is invalid!"/>
         <classes>
             <class name="com.herokuapp.theinternet.Test2">
-                <methods>
-                    <include name="invalidPassword"></include>
-                    <exclude name="invalidUsername"></exclude>
-                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="NegativePasswordTest">
+        <parameter name="username"  value="tomsmith"/>
+        <parameter name="password"  value="SuperSecretPassword"/>
+        <parameter name="expectedMessage"  value="Your password is invalid!"/>
+        <classes>
+            <class name="com.herokuapp.theinternet.Test2">
             </class>
         </classes>
     </test>
