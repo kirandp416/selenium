@@ -3,6 +3,7 @@
 <suite name="AllTests" verbose="1" >
 
     <test name="PositiveTest" >
+        <parameter name="browser" value="chrome"></parameter>
         <classes>
             <class name="com.herokuapp.theinternet.Login">
                 <methods>
@@ -16,6 +17,7 @@
         <parameter name="username"  value="invalid"/>
         <parameter name="password"  value="SuperSecretPassword!"/>
         <parameter name="expectedMessage"  value="Your username is invalid!"/>
+        <parameter name="browser" value="chrome"></parameter>
         <classes>
             <class name="com.herokuapp.theinternet.Login">
                 <methods>
@@ -29,6 +31,7 @@
         <parameter name="username"  value="tomsmith"/>
         <parameter name="password"  value="SuperSecretPassword"/>
         <parameter name="expectedMessage"  value="Your password is invalid!"/>
+        <parameter name="browser" value="firefox"></parameter>
         <classes>
             <class name="com.herokuapp.theinternet.Login">
                 <methods>

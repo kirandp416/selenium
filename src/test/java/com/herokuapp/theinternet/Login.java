@@ -4,28 +4,46 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class Login {
 
     private WebDriver driver;
+    @Parameters({"browser"})
     @BeforeMethod
-    private void precondition(){
-        System.setProperty("webdriver.chrome.driver","C:/Automation/Selenium Maven/src/main/resources/chromedriver.exe");
-        driver = new ChromeDriver();
+    private void precondition(@Optional String browser){
+
+        switch (browser){
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver","C:/Automation/Selenium Maven/src/main/resources/chromedriver.exe");
+                driver = new ChromeDriver();
+                break;
+            case "firefox":
+                System.setProperty("webdriver.gecko.driver","C:/Automation/Selenium Maven/src/main/resources/geckodriver.exe");
+                driver = new FirefoxDriver();
+                break;
+            default:
+                System.out.println("Given browser "+browser+"  doesn't exist. Starting in chrome.....");
+                System.setProperty("webdriver.chrome.driver","C:/Automation/Selenium Maven/src/main/resources/chromedriver.exe");
+                driver = new ChromeDriver();
+                break;
+        }
+
+
         String url = "https://the-internet.herokuapp.com/";
         driver.get(url);
         System.out.println("Opened url");
         driver.manage().window().maximize();
     }
+
+
     @AfterMethod
     private void closeBrowser(){
         driver.quit();
     }
+
     @Test(priority = 1, groups = { "positiveTests", "smokeTests" })
     public void login() throws InterruptedException {
 
@@ -57,9 +75,9 @@ public class Login {
 
     }
 
-    @Parameters({"username","password","expectedMessage"})
+    @Parameters({"username","password","expectedMessage","browser"})
     @Test(priority = 2, groups = { "negativeTests", "smokeTests" })
-    public void negativeLogin(String username, String password, String expectedMessage){
+    public void negativeLogin(String username, String password, String expectedMessage, String browser){
 
         driver.findElement(By.xpath("//*[@id=\"content\"]/ul/li[21]/a")).click();
         driver.findElement(By.name("username")).sendKeys(username);
