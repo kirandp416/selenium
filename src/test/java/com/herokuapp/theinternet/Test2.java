@@ -8,7 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class Test2 {
-    @Test
+    @Test(priority = 1, groups = { "negativeTests", "smokeTests" })
     public void invalidUsername(){
         System.setProperty("webdriver.chrome.driver","C:/Automation/Selenium Maven/src/main/resources/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
@@ -38,7 +38,7 @@ public class Test2 {
 
     }
 
-    @Test
+    @Test(priority = 2, groups = { "negativeTests" })
     public void invalidPassword(){
         System.setProperty("webdriver.chrome.driver","C:/Automation/Selenium Maven/src/main/resources/chromedriver.exe");
         WebDriver driver = new ChromeDriver();

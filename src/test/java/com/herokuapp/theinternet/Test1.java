@@ -8,7 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class Test1 {
-    @Test
+    @Test(groups = {"smokeTests"})
     public void login() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver","C:/Automation/Selenium Maven/src/main/resources/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
