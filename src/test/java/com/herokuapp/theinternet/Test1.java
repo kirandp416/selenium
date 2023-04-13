@@ -8,7 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class Test1 {
-    @Test
+    @Test(groups = {"smokeTests"})
     public void login() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver","C:/Automation/Selenium Maven/src/main/resources/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
@@ -28,7 +28,7 @@ public class Test1 {
 
         Assert.assertEquals(actualUrl,expectedUrl,"Different url");
 
-        Sleep(3000);
+        Sleep(1000);
 
         System.out.println("logged in");
 
