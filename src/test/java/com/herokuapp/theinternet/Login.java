@@ -5,18 +5,29 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class Login {
-    @Test(priority = 1, groups = { "positiveTests", "smokeTests" })
-    public void login() throws InterruptedException {
+
+    private WebDriver driver;
+    @BeforeMethod
+    private void precondition(){
         System.setProperty("webdriver.chrome.driver","C:/Automation/Selenium Maven/src/main/resources/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         String url = "https://the-internet.herokuapp.com/";
         driver.get(url);
         System.out.println("Opened url");
         driver.manage().window().maximize();
+    }
+    @AfterMethod
+    private void closeBrowser(){
+        driver.quit();
+    }
+    @Test(priority = 1, groups = { "positiveTests", "smokeTests" })
+    public void login() throws InterruptedException {
 
         driver.findElement(By.xpath("//*[@id=\"content\"]/ul/li[21]/a")).click();
         driver.findElement(By.name("username")).sendKeys("tomsmith");
@@ -43,18 +54,12 @@ public class Login {
         Assert.assertTrue(actualMessage.contains(expectedMessage),"Different message");
 
         logoutButton.click();
-        driver.quit();
+
     }
 
     @Parameters({"username","password","expectedMessage"})
     @Test(priority = 2, groups = { "negativeTests", "smokeTests" })
     public void negativeLogin(String username, String password, String expectedMessage){
-        System.setProperty("webdriver.chrome.driver","C:/Automation/Selenium Maven/src/main/resources/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
-        String url = "https://the-internet.herokuapp.com/";
-        driver.get(url);
-
-        driver.manage().window().maximize();
 
         driver.findElement(By.xpath("//*[@id=\"content\"]/ul/li[21]/a")).click();
         driver.findElement(By.name("username")).sendKeys(username);
@@ -72,7 +77,6 @@ public class Login {
 
         Assert.assertEquals(expectedURL,actualURL);
 
-        driver.quit();
 
     }
 
